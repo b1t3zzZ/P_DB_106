@@ -1,0 +1,195 @@
+-- =============================================================================
+-- REQUÊTES SQL DU PROJET C106 (ThanosPizza)
+-- Toutes les requêtes sont testées, validées et documentées
+-- =============================================================================
+
+-- -----------------------------------------------------------------------------
+-- Requête n°1 - Pizzas les plus vendues
+-- Objectif : Afficher les 10 pizzas les plus vendues par ordre décroissant
+-- Concepts : Jointure INNER JOIN, fonction d'agrégation SUM, GROUP BY, LIMIT
+-- -----------------------------------------------------------------------------
+SELECT 
+    a.nom AS 'Pizza', 
+    SUM(lc.quantite) AS 'Quantite_totale'
+FROM t_article AS a
+INNER JOIN t_ligne_commande AS lc ON lc.article_fk = a.article_id
+WHERE a.type = 'pizza'
+GROUP BY a.article_id, a.nom
+ORDER BY Quantite_totale DESC
+LIMIT 10;
+
+-- -----------------------------------------------------------------------------
+-- Requête n°2 - Toppings les plus populaires
+-- Objectif : Afficher la quantité totale utilisée pour chaque topping
+-- Règle : Le topping s'applique à chaque pizza de la ligne (SUM(lc.quantite))
+-- Concepts : Multi-jointure (table de liaison t_ligne_topping), agrégation SUM
+-- -----------------------------------------------------------------------------
+SELECT 
+    t.nom AS 'Topping', 
+    SUM(lc.quantite) AS 'Quantite_totale'
+FROM t_topping AS t
+INNER JOIN t_ligne_topping AS lt ON lt.topping_fk = t.topping_id
+INNER JOIN t_ligne_commande AS lc ON lc.ligne_commande_id = lt.ligne_commande_fk
+GROUP BY t.topping_id, t.nom
+ORDER BY Quantite_totale DESC;
+
+-- -----------------------------------------------------------------------------
+-- Requête n°3 - Chiffre d’affaires par jour
+-- Objectif : Somme des paiements par jour pour les commandes livrées
+-- Concepts : Extraction DATE(), ROUND(SUM(), 2), filtrage statut, tri chronologique
+-- -----------------------------------------------------------------------------
+SELECT 
+    DATE(c.date_creation) AS 'Date', 
+    ROUND(SUM(p.montant), 2) AS 'Chiffre_affaires'
+FROM t_commande AS c
+INNER JOIN t_paiement AS p ON p.commande_fk = c.commande_id
+WHERE c.statut = 'livree'
+GROUP BY DATE(c.date_creation)
+ORDER BY Date ASC;
+
+-- -----------------------------------------------------------------------------
+-- Requête n°4 - Chiffre d’affaires par zone de livraison
+-- Objectif : CA par NPA et localité pour les commandes livrées à domicile
+-- Concepts : Multi-jointure (t_adresse), double condition WHERE, GROUP BY géographique
+-- -----------------------------------------------------------------------------
+SELECT 
+    a.npa AS 'NPA', 
+    a.localite AS 'Localite', 
+    ROUND(SUM(p.montant), 2) AS 'Chiffre_affaires'
+FROM t_adresse AS a
+INNER JOIN t_commande AS c ON c.adresse_livraison_fk = a.adresse_id
+INNER JOIN t_paiement AS p ON p.commande_fk = c.commande_id
+WHERE c.type = 'livraison' AND c.statut = 'livree'
+GROUP BY a.npa, a.localite
+ORDER BY Chiffre_affaires DESC;
+
+-- -----------------------------------------------------------------------------
+-- Requête n°5 - Heures chaudes
+-- Objectif : Identifier les heures de forte activité
+-- Concepts : Extraction temporelle HOUR(), COUNT(), tri statistique décroissant
+-- -----------------------------------------------------------------------------
+SELECT 
+    HOUR(date_creation) AS 'Heure', 
+    COUNT(commande_id) AS 'Nombre_commandes'
+FROM t_commande
+GROUP BY HOUR(date_creation)
+ORDER BY Nombre_commandes DESC;
+
+-- -----------------------------------------------------------------------------
+-- Requête n°6 - Clients fidèles
+-- Objectif : Clients ayant commandé au moins 5 fois
+-- Concepts : Jointure t_client / t_commande, filtrage post-agrégation HAVING >= 5
+-- -----------------------------------------------------------------------------
+SELECT 
+    c.nom AS 'Nom', 
+    c.prenom AS 'Prenom', 
+    COUNT(co.commande_id) AS 'Nombre_commandes'
+FROM t_client AS c
+INNER JOIN t_commande AS co ON co.client_fk = c.client_id
+GROUP BY c.client_id, c.nom, c.prenom
+HAVING COUNT(co.commande_id) >= 5
+ORDER BY Nombre_commandes DESC, c.nom ASC;
+
+-- -----------------------------------------------------------------------------
+-- Requête n°7 - Situation financière des commandes
+-- Objectif : Montant dû (articles + toppings), montant payé et reste à payer
+-- Concepts : Sous-requêtes d'agrégation indépendantes pour éviter les doublons, COALESCE()
+-- -----------------------------------------------------------------------------
+SELECT 
+    c.commande_id AS 'Commande_ID',
+    ROUND(
+        COALESCE(articles.total_articles, 0) + COALESCE(toppings.total_toppings, 0), 
+        2
+    ) AS 'Montant_du',
+    ROUND(COALESCE(paiements.total_paye, 0), 2) AS 'Montant_paye',
+    ROUND(
+        (COALESCE(articles.total_articles, 0) + COALESCE(toppings.total_toppings, 0)) - COALESCE(paiements.total_paye, 0), 
+        2
+    ) AS 'Reste_a_payer'
+FROM t_commande AS c
+LEFT JOIN (
+    SELECT lc.commande_fk, SUM(lc.quantite * lc.prix_unitaire) AS total_articles
+    FROM t_ligne_commande AS lc
+    GROUP BY lc.commande_fk
+) AS articles ON articles.commande_fk = c.commande_id
+LEFT JOIN (
+    SELECT lc.commande_fk, SUM(lc.quantite * lt.prix_facture) AS total_toppings
+    FROM t_ligne_commande AS lc
+    INNER JOIN t_ligne_topping AS lt ON lt.ligne_commande_fk = lc.ligne_commande_id
+    GROUP BY lc.commande_fk
+) AS toppings ON toppings.commande_fk = c.commande_id
+LEFT JOIN (
+    SELECT p.commande_fk, SUM(p.montant) AS total_paye
+    FROM t_paiement AS p
+    GROUP BY p.commande_fk
+) AS paiements ON paiements.commande_fk = c.commande_id
+ORDER BY c.commande_id ASC;
+
+-- -----------------------------------------------------------------------------
+-- Requête n°8 - Répartition des types de commandes
+-- Objectif : Répartition entre sur_place, emporter et livraison
+-- Concepts : Agrégation simple par type, COUNT(), tri décroissant
+-- -----------------------------------------------------------------------------
+SELECT 
+    type AS 'Type_commande', 
+    COUNT(commande_id) AS 'Nombre_commandes'
+FROM t_commande
+GROUP BY type
+ORDER BY Nombre_commandes DESC;
+
+-- -----------------------------------------------------------------------------
+-- Requête n°9 - Performance des livreurs
+-- Objectif : Délai moyen de livraison en minutes pour les courses complètes
+-- Concepts : Différence en minutes TIMESTAMPDIFF(), moyenne AVG(), filtrage IS NOT NULL
+-- -----------------------------------------------------------------------------
+SELECT 
+    l.livreur_id AS 'Livreur_ID', 
+    l.nom AS 'Nom', 
+    l.prenom AS 'Prenom', 
+    ROUND(AVG(TIMESTAMPDIFF(MINUTE, li.heure_depart, li.heure_arrivee)), 1) AS 'Delai_moyen_minutes'
+FROM t_livreur AS l
+INNER JOIN t_livraison AS li ON li.livreur_fk = l.livreur_id
+WHERE li.heure_depart IS NOT NULL 
+  AND li.heure_arrivee IS NOT NULL
+GROUP BY l.livreur_id, l.nom, l.prenom
+ORDER BY Delai_moyen_minutes ASC;
+
+-- -----------------------------------------------------------------------------
+-- Requête n°10 - Tous les clients
+-- Objectif : Liste de tous les clients avec nombre de commandes (y compris 0)
+-- Concepts : Jointure externe LEFT JOIN, COUNT(clé étrangère), GROUP BY clé primaire
+-- -----------------------------------------------------------------------------
+SELECT 
+    c.nom AS 'Nom', 
+    c.prenom AS 'Prenom', 
+    COUNT(co.commande_id) AS 'Nombre_commandes'
+FROM t_client AS c
+LEFT JOIN t_commande AS co ON co.client_fk = c.client_id
+GROUP BY c.client_id, c.nom, c.prenom
+ORDER BY Nombre_commandes DESC, c.nom ASC;
+
+-- -----------------------------------------------------------------------------
+-- Requête n°11 - Articles jamais commandés
+-- Objectif : Articles du catalogue sans aucune vente enregistrée
+-- Concepts : Sous-requête d'exclusion NOT IN, DISTINCT, tri alphabétique
+-- -----------------------------------------------------------------------------
+SELECT 
+    nom AS 'Article'
+FROM t_article
+WHERE article_id NOT IN (
+    SELECT DISTINCT article_fk 
+    FROM t_ligne_commande 
+    WHERE article_fk IS NOT NULL
+)
+ORDER BY nom ASC;
+
+-- -----------------------------------------------------------------------------
+-- Requête n°12 - Contrôle des numéros de téléphone
+-- Objectif : Vérification de la conformité du format (+41 79 123 45 67)
+-- Concepts : Expressions régulières REGEXP, agrégation conditionnelle CASE WHEN
+-- -----------------------------------------------------------------------------
+SELECT 
+    COUNT(client_id) AS 'Total_clients', 
+    SUM(CASE WHEN telephone REGEXP '^\\+41 [0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2}$' THEN 1 ELSE 0 END) AS 'Numeros_valides', 
+    SUM(CASE WHEN telephone NOT REGEXP '^\\+41 [0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2}$' THEN 1 ELSE 0 END) AS 'Numeros_invalides'
+FROM t_client;
