@@ -1,7 +1,7 @@
 
 # RAPPORT DE PROJET — MODULE C106
 
-## Gestion d’une pizzeria avec livraisons (ThanosPizza) — Rendu Final (100%)
+## Gestion d’une pizzeria avec livraisons (ThanosPizza) — Rendu (80%)
 
 ---
 
@@ -12,7 +12,7 @@
 - **Module :** C106 — Interroger, traiter et assurer la maintenance des bases de données
 - **SGBD utilisé :** MySQL 8.0 (Environnement conteneurisé Docker) & phpMyAdmin
 - **Outil de modélisation :** Looping (MERISE)
-- **Date de réalisation :** Année scolaire 2025 – 2026
+- **Date de réalisation :** Année scolaire 2026 – 2027
 
 ---
 
