@@ -1,0 +1,281 @@
+adresse_id	rue	npa	localite	client_fk
+1	65 Chemin de la Prairie	1006	Lausanne	1
+2	52 Rue de l'Industrie	1020	Renens	2
+3	109 Route de Cossonay	1023	Crissier	3
+4	9 Rue de Bourg	1003	Lausanne	4
+5	57 Chemin des Fleurs	1020	Renens	5
+6	7 Rue du Lac	1012	Lausanne	6
+7	7 Rue de Bourg	1007	Lausanne	7
+8	45 Avenue d'Echallens	1007	Lausanne	8
+9	98 Chemin de la Prairie	1005	Lausanne	9
+10	34 Avenue de Béthusy	1004	Lausanne	10
+11	70 Rue du Simplon	1004	Lausanne	11
+12	27 Chemin de la Prairie	1004	Lausanne	12
+13	39 Avenue de Cour	1020	Renens	13
+14	80 Route de Cossonay	1023	Crissier	14
+15	103 Rue de l'Industrie	1022	Chavannes-près-Renens	15
+16	22 Chemin de la Prairie	1020	Renens	16
+17	11 Avenue de Cour	1008	Prilly	17
+18	111 Rue de Bourg	1009	Pully	18
+19	77 Rue du Lac	1027	Lonay	19
+20	117 Chemin du Levant	1030	Bussigny	20
+21	115 Avenue de France	1024	Ecublens	21
+22	27 Avenue de Béthusy	1005	Lausanne	22
+23	58 Chemin de la Prairie	1005	Lausanne	23
+24	92 Avenue du Grey	1026	Denges	24
+25	52 Route de Cossonay	1003	Lausanne	25
+26	36 Avenue de France	1004	Lausanne	26
+27	83 Avenue de Béthusy	1024	Ecublens	27
+28	75 Rue Centrale	1022	Chavannes-près-Renens	28
+29	24 Chemin des Fleurs	1003	Lausanne	29
+30	36 Route de Cossonay	1004	Lausanne	30
+31	56 Rue Centrale	1020	Renens	31
+32	101 Avenue de France	1006	Lausanne	32
+33	106 Avenue de Cour	1003	Lausanne	33
+34	76 Avenue de France	1010	Lausanne	34
+35	29 Rue du Lac	1009	Pully	35
+36	105 Avenue de Béthusy	1004	Lausanne	36
+37	17 Rue de Bourg	1004	Lausanne	37
+38	13 Rue de l'Industrie	1030	Bussigny	38
+39	17 Chemin de la Prairie	1004	Lausanne	39
+40	54 Avenue du Grey	1008	Prilly	40
+41	107 Avenue de Béthusy	1020	Renens	41
+42	63 Avenue de Béthusy	1006	Lausanne	42
+43	2 Rue de Bourg	1006	Lausanne	43
+44	98 Chemin de Renens	1003	Lausanne	44
+45	16 Rue du Simplon	1007	Lausanne	45
+46	73 Chemin du Levant	1030	Bussigny	46
+47	26 Rue du Simplon	1005	Lausanne	47
+48	101 Avenue d'Echallens	1032	Romanel-sur-Lausanne	48
+49	92 Chemin de la Prairie	1009	Pully	49
+50	107 Avenue de Cour	1004	Lausanne	50
+51	108 Rue de l'Industrie	1003	Lausanne	51
+52	75 Avenue du Grey	1025	Saint-Sulpice	52
+53	56 Chemin de la Prairie	1005	Lausanne	53
+54	117 Avenue d'Echallens	1005	Lausanne	54
+55	75 Rue Centrale	1003	Lausanne	55
+56	96 Rue du Lac	1004	Lausanne	56
+57	5 Rue du Lac	1030	Bussigny	57
+58	33 Rue Centrale	1007	Lausanne	58
+59	87 Chemin de la Prairie	1005	Lausanne	59
+60	42 Rue du Simplon	1008	Prilly	60
+61	31 Rue de Bourg	1012	Lausanne	61
+62	82 Rue du Lac	1010	Lausanne	62
+63	52 Avenue de Cour	1005	Lausanne	63
+64	2 Avenue de Cour	1012	Lausanne	64
+65	75 Route de Cossonay	1025	Saint-Sulpice	65
+66	104 Route de Cossonay	1010	Lausanne	66
+67	44 Chemin de la Prairie	1020	Renens	67
+68	40 Chemin de Renens	1004	Lausanne	68
+69	13 Rue du Lac	1004	Lausanne	69
+70	49 Rue du Simplon	1008	Prilly	70
+71	36 Avenue de Cour	1024	Ecublens	71
+72	79 Avenue de Cour	1003	Lausanne	72
+73	17 Avenue de Cour	1007	Lausanne	73
+74	28 Avenue de Cour	1008	Prilly	74
+75	98 Rue du Lac	1005	Lausanne	75
+76	33 Rue du Simplon	1010	Lausanne	76
+77	32 Chemin de Renens	1022	Chavannes-près-Renens	77
+78	89 Rue Centrale	1007	Lausanne	78
+79	35 Rue de l'Industrie	1003	Lausanne	79
+80	106 Route de Cossonay	1023	Crissier	80
+81	41 Route de Cossonay	1006	Lausanne	81
+82	82 Avenue de Cour	1008	Prilly	82
+83	104 Rue Centrale	1003	Lausanne	83
+84	61 Rue Centrale	1003	Lausanne	84
+85	89 Route de Cossonay	1007	Lausanne	85
+86	67 Chemin de la Prairie	1005	Lausanne	86
+87	2 Rue du Lac	1004	Lausanne	87
+88	40 Rue de Bourg	1020	Renens	88
+89	66 Chemin de la Prairie	1022	Chavannes-près-Renens	89
+90	21 Chemin de Renens	1004	Lausanne	90
+91	11 Avenue de Cour	1005	Lausanne	91
+92	6 Chemin de la Prairie	1008	Prilly	92
+93	77 Rue du Lac	1007	Lausanne	93
+94	113 Rue du Lac	1005	Lausanne	94
+95	81 Rue Centrale	1003	Lausanne	95
+96	37 Chemin des Fleurs	1025	Saint-Sulpice	96
+97	41 Rue de Bourg	1006	Lausanne	97
+98	107 Chemin des Fleurs	1003	Lausanne	98
+99	76 Avenue du Grey	1010	Lausanne	99
+100	109 Rue de l'Industrie	1020	Renens	100
+101	10 Avenue d'Echallens	1020	Renens	101
+102	9 Avenue d'Echallens	1010	Lausanne	102
+103	92 Avenue de Cour	1012	Lausanne	103
+104	119 Avenue d'Echallens	1010	Lausanne	104
+105	26 Rue du Lac	1020	Renens	105
+106	80 Rue du Simplon	1007	Lausanne	106
+107	62 Avenue d'Echallens	1003	Lausanne	107
+108	5 Chemin des Fleurs	1004	Lausanne	108
+109	13 Route de Cossonay	1009	Pully	109
+110	104 Chemin des Fleurs	1008	Prilly	110
+111	22 Chemin de Renens	1009	Pully	111
+112	91 Rue du Lac	1012	Lausanne	112
+113	36 Avenue de Cour	1007	Lausanne	113
+114	91 Avenue du Grey	1009	Pully	114
+115	66 Avenue de France	1023	Crissier	115
+116	115 Chemin du Levant	1006	Lausanne	116
+117	4 Chemin de Renens	1012	Lausanne	117
+118	11 Chemin des Fleurs	1005	Lausanne	118
+119	96 Chemin de Renens	1025	Saint-Sulpice	119
+120	2 Avenue de Cour	1006	Lausanne	120
+121	61 Rue de l'Industrie	1008	Prilly	121
+122	30 Chemin du Levant	1024	Ecublens	122
+123	59 Rue Centrale	1003	Lausanne	123
+124	84 Chemin de Renens	1007	Lausanne	124
+125	39 Avenue de Béthusy	1004	Lausanne	125
+126	65 Avenue de Béthusy	1008	Prilly	126
+127	73 Rue Centrale	1009	Pully	127
+128	104 Chemin du Levant	1024	Ecublens	128
+129	108 Rue de Bourg	1005	Lausanne	129
+130	94 Chemin des Fleurs	1004	Lausanne	130
+131	78 Route de Cossonay	1020	Renens	131
+132	71 Avenue du Grey	1005	Lausanne	132
+133	29 Rue du Simplon	1004	Lausanne	133
+134	85 Rue Centrale	1003	Lausanne	134
+135	21 Avenue de Cour	1020	Renens	135
+136	63 Avenue du Grey	1007	Lausanne	136
+137	39 Avenue du Grey	1005	Lausanne	137
+138	31 Chemin des Fleurs	1004	Lausanne	138
+139	35 Rue du Simplon	1004	Lausanne	139
+140	2 Avenue de Béthusy	1022	Chavannes-près-Renens	140
+141	45 Rue de Bourg	1005	Lausanne	141
+142	89 Rue du Lac	1020	Renens	142
+143	14 Chemin des Fleurs	1007	Lausanne	143
+144	3 Avenue de France	1003	Lausanne	144
+145	51 Chemin de Renens	1008	Prilly	145
+146	97 Chemin de la Prairie	1007	Lausanne	146
+147	10 Avenue de Béthusy	1009	Pully	147
+148	114 Avenue de Béthusy	1003	Lausanne	148
+149	54 Rue du Simplon	1005	Lausanne	149
+150	34 Rue de Bourg	1004	Lausanne	150
+151	101 Chemin de Renens	1022	Chavannes-près-Renens	151
+152	32 Avenue de France	1007	Lausanne	152
+153	10 Rue de Bourg	1012	Lausanne	153
+154	61 Rue du Simplon	1012	Lausanne	154
+155	102 Chemin de la Prairie	1022	Chavannes-près-Renens	155
+156	76 Rue du Simplon	1007	Lausanne	156
+157	83 Avenue de France	1006	Lausanne	157
+158	112 Avenue du Grey	1023	Crissier	158
+159	64 Chemin du Levant	1007	Lausanne	159
+160	113 Avenue de Cour	1006	Lausanne	160
+161	76 Rue du Lac	1004	Lausanne	161
+162	16 Route de Cossonay	1003	Lausanne	162
+163	77 Rue du Lac	1003	Lausanne	163
+164	110 Avenue d'Echallens	1030	Bussigny	164
+165	32 Avenue de Cour	1007	Lausanne	165
+166	36 Rue du Lac	1005	Lausanne	166
+167	19 Rue de Bourg	1008	Prilly	167
+168	92 Chemin du Levant	1005	Lausanne	168
+169	86 Avenue de Béthusy	1020	Renens	169
+170	5 Chemin de Renens	1022	Chavannes-près-Renens	170
+171	117 Rue du Simplon	1012	Lausanne	171
+172	21 Avenue de France	1004	Lausanne	172
+173	19 Rue Centrale	1009	Pully	173
+174	62 Rue Centrale	1009	Pully	174
+175	85 Rue de l'Industrie	1004	Lausanne	175
+176	36 Avenue de France	1024	Ecublens	176
+177	71 Rue Centrale	1010	Lausanne	177
+178	22 Rue du Lac	1005	Lausanne	178
+179	91 Avenue de France	1009	Pully	179
+180	119 Avenue de Cour	1005	Lausanne	180
+181	71 Avenue de France	1025	Saint-Sulpice	181
+182	45 Rue Centrale	1020	Renens	182
+183	66 Route de Cossonay	1020	Renens	183
+184	115 Chemin du Levant	1020	Renens	184
+185	58 Rue du Lac	1005	Lausanne	185
+186	41 Avenue d'Echallens	1023	Crissier	186
+187	43 Route de Cossonay	1022	Chavannes-près-Renens	187
+188	66 Avenue de Béthusy	1004	Lausanne	188
+189	31 Route de Cossonay	1025	Saint-Sulpice	189
+190	111 Avenue d'Echallens	1025	Saint-Sulpice	190
+191	98 Route de Cossonay	1009	Pully	191
+192	98 Chemin de la Prairie	1007	Lausanne	192
+193	77 Chemin du Levant	1008	Prilly	193
+194	33 Chemin des Fleurs	1007	Lausanne	194
+195	97 Avenue de Cour	1007	Lausanne	195
+196	112 Avenue de Cour	1023	Crissier	196
+197	105 Rue Centrale	1007	Lausanne	197
+198	10 Rue du Simplon	1022	Chavannes-près-Renens	198
+199	30 Chemin du Levant	1006	Lausanne	199
+200	23 Route de Cossonay	1004	Lausanne	200
+201	93 Route de Cossonay	1005	Lausanne	102
+202	31 Rue Centrale	1006	Lausanne	88
+203	105 Rue de l'Industrie	1004	Lausanne	81
+204	53 Chemin de la Prairie	1004	Lausanne	92
+205	46 Avenue de France	1003	Lausanne	52
+206	77 Rue de l'Industrie	1010	Lausanne	47
+207	27 Route de Cossonay	1007	Lausanne	89
+208	97 Rue Centrale	1010	Lausanne	7
+209	6 Rue du Simplon	1025	Saint-Sulpice	123
+210	77 Rue du Lac	1023	Crissier	139
+211	35 Chemin des Fleurs	1009	Pully	73
+212	6 Avenue d'Echallens	1003	Lausanne	97
+213	92 Chemin du Levant	1003	Lausanne	50
+214	87 Rue de Bourg	1012	Lausanne	13
+215	95 Rue de Bourg	1005	Lausanne	24
+216	102 Chemin de Renens	1006	Lausanne	113
+217	51 Avenue de Béthusy	1005	Lausanne	71
+218	85 Rue de l'Industrie	1030	Bussigny	33
+219	60 Avenue de Cour	1027	Lonay	63
+220	72 Avenue d'Echallens	1012	Lausanne	43
+221	82 Route de Cossonay	1004	Lausanne	68
+222	24 Avenue d'Echallens	1009	Pully	77
+223	10 Rue Centrale	1024	Ecublens	171
+224	23 Avenue de Cour	1007	Lausanne	110
+225	44 Chemin des Fleurs	1024	Ecublens	107
+226	2 Rue du Simplon	1004	Lausanne	62
+227	14 Rue de l'Industrie	1008	Prilly	80
+228	99 Chemin de Renens	1010	Lausanne	136
+229	64 Chemin des Fleurs	1003	Lausanne	4
+230	79 Chemin des Fleurs	1012	Lausanne	35
+231	78 Chemin de la Prairie	1003	Lausanne	132
+232	14 Avenue de Cour	1003	Lausanne	23
+233	45 Rue Centrale	1008	Prilly	150
+234	71 Avenue de France	1006	Lausanne	135
+235	89 Avenue de Cour	1020	Renens	167
+236	41 Chemin des Fleurs	1005	Lausanne	19
+237	62 Chemin de la Prairie	1009	Pully	64
+238	47 Chemin des Fleurs	1010	Lausanne	60
+239	7 Avenue de Cour	1020	Renens	151
+240	15 Avenue de France	1004	Lausanne	79
+241	111 Avenue de Cour	1003	Lausanne	141
+242	10 Chemin de la Prairie	1008	Prilly	25
+243	70 Avenue de Cour	1006	Lausanne	27
+244	109 Route de Cossonay	1003	Lausanne	21
+245	8 Avenue de Béthusy	1008	Prilly	122
+246	82 Route de Cossonay	1030	Bussigny	174
+247	115 Avenue du Grey	1020	Renens	168
+248	97 Chemin des Fleurs	1009	Pully	172
+249	81 Rue Centrale	1009	Pully	160
+250	92 Rue Centrale	1030	Bussigny	148
+251	64 Rue du Lac	1004	Lausanne	40
+252	64 Chemin de la Prairie	1030	Bussigny	54
+253	63 Rue du Simplon	1025	Saint-Sulpice	140
+254	88 Avenue de Cour	1004	Lausanne	69
+255	56 Avenue du Grey	1023	Crissier	37
+256	120 Avenue de France	1009	Pully	5
+257	50 Chemin du Levant	1007	Lausanne	133
+258	25 Rue Centrale	1010	Lausanne	34
+259	3 Chemin du Levant	1010	Lausanne	1
+260	4 Rue du Lac	1020	Renens	112
+261	91 Chemin de Renens	1012	Lausanne	152
+262	26 Avenue d'Echallens	1030	Bussigny	61
+263	1 Avenue de France	1005	Lausanne	3
+264	66 Rue de l'Industrie	1020	Renens	98
+265	29 Rue de Bourg	1003	Lausanne	55
+266	118 Avenue de Cour	1009	Pully	72
+267	23 Rue du Simplon	1007	Lausanne	45
+268	11 Rue de Bourg	1004	Lausanne	76
+269	58 Chemin de la Prairie	1010	Lausanne	49
+270	82 Avenue d'Echallens	1006	Lausanne	41
+271	17 Avenue de Cour	1008	Prilly	120
+272	23 Rue du Lac	1010	Lausanne	56
+273	97 Route de Cossonay	1009	Pully	103
+274	13 Rue de Bourg	1022	Chavannes-près-Renens	121
+275	83 Avenue de Béthusy	1004	Lausanne	137
+276	119 Route de Cossonay	1004	Lausanne	99
+277	78 Avenue du Grey	1003	Lausanne	101
+278	51 Avenue d'Echallens	1006	Lausanne	125
+279	11 Chemin de la Prairie	1008	Prilly	162
+280	119 Chemin de la Prairie	1009	Pully	114

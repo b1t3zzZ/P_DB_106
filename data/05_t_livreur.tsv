@@ -1,0 +1,16 @@
+livreur_id	nom	prenom	telephone	actif
+1	Martin	Léa	+41 79 320 41 11	1
+2	Rossi	Marco	+41 78 461 28 15	1
+3	Dubois	Julien	+41 76 572 31 48	1
+4	Morel	Sarah	+41 79 683 52 20	1
+5	Pereira	Tiago	+41 78 734 65 19	1
+6	Müller	Anna	+41 76 845 74 23	1
+7	Ferreira	Lucas	+41 79 956 83 34	1
+8	Bernard	Chloé	+41 78 167 92 46	1
+9	Silva	Diego	+41 76 278 13 57	1
+10	Favre	Noémie	+41 79 389 24 68	1
+11	Richard	Hugo	+41 78 490 35 79	1
+12	Lopez	Sofia	+41 76 501 46 80	1
+13	Meier	Jonas	+41 79 612 57 91	1
+14	Blanc	Camille	+41 78 723 68 02	0
+15	Nguyen	Alex	+41 76 834 79 13	0

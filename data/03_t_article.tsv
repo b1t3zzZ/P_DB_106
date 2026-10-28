@@ -1,0 +1,51 @@
+article_id	nom	type	prix	tva	actif
+1	Margherita	pizza	15.00	8.10	1
+2	Prosciutto	pizza	18.00	8.10	1
+3	Funghi	pizza	17.00	8.10	1
+4	Prosciutto e Funghi	pizza	19.00	8.10	1
+5	Napoli	pizza	18.50	8.10	1
+6	Diavola	pizza	19.50	8.10	1
+7	Quattro Formaggi	pizza	20.00	8.10	1
+8	Capricciosa	pizza	21.00	8.10	1
+9	Vegetariana	pizza	19.00	8.10	1
+10	Tonno	pizza	19.50	8.10	1
+11	Hawaii	pizza	18.50	8.10	1
+12	Parma	pizza	22.00	8.10	1
+13	Calzone	pizza	20.00	8.10	1
+14	Siciliana	pizza	19.50	8.10	1
+15	Romana	pizza	18.50	8.10	1
+16	Frutti di Mare	pizza	23.50	8.10	1
+17	Bufala	pizza	21.50	8.10	1
+18	Piccante	pizza	20.50	8.10	1
+19	Mexicana	pizza	21.00	8.10	1
+20	Carbonara	pizza	20.50	8.10	1
+21	Burrata	pizza	23.00	8.10	1
+22	Mediterranea	pizza	21.00	8.10	1
+23	Pollo BBQ	pizza	21.50	8.10	1
+24	Bianca	pizza	18.00	8.10	1
+25	Tartufata	pizza	24.00	8.10	1
+26	Coca-Cola 50cl	boisson	4.50	8.10	1
+27	Coca-Cola Zero 50cl	boisson	4.50	8.10	1
+28	Fanta 50cl	boisson	4.50	8.10	1
+29	Sprite 50cl	boisson	4.50	8.10	1
+30	Thé froid citron 50cl	boisson	4.50	8.10	1
+31	Thé froid pêche 50cl	boisson	4.50	8.10	1
+32	Eau plate 50cl	boisson	3.50	8.10	1
+33	Eau gazeuse 50cl	boisson	3.50	8.10	1
+34	San Pellegrino 50cl	boisson	4.00	8.10	1
+35	Rivella rouge 50cl	boisson	4.50	8.10	1
+36	Jus d'orange	boisson	5.00	8.10	1
+37	Jus de pomme	boisson	5.00	8.10	1
+38	Red Bull	boisson	5.50	8.10	1
+39	Bière sans alcool	boisson	5.50	8.10	1
+40	Limonade maison	boisson	6.00	8.10	1
+41	Tiramisu	dessert	8.50	8.10	1
+42	Panna cotta	dessert	8.00	8.10	1
+43	Mousse au chocolat	dessert	8.50	8.10	1
+44	Cheesecake	dessert	9.00	8.10	1
+45	Cannoli	dessert	7.50	8.10	1
+46	Glace vanille	dessert	6.50	8.10	1
+47	Glace chocolat	dessert	6.50	8.10	0
+48	Glace pistache	dessert	7.00	8.10	0
+49	Brownie	dessert	7.50	8.10	0
+50	Salade de fruits	dessert	7.00	8.10	0

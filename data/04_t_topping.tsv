@@ -1,0 +1,26 @@
+topping_id	nom	prix	actif
+1	Mozzarella supplémentaire	2.50	1
+2	Jambon	2.50	1
+3	Salami piquant	3.00	1
+4	Champignons	2.00	1
+5	Olives noires	1.50	1
+6	Olives vertes	1.50	1
+7	Oignons	1.50	1
+8	Poivrons	2.00	1
+9	Artichauts	2.50	1
+10	Anchois	3.00	1
+11	Thon	3.00	1
+12	Œuf	2.00	1
+13	Bacon	3.00	1
+14	Poulet	3.50	1
+15	Roquette	2.00	1
+16	Parmesan	2.50	1
+17	Gorgonzola	3.00	1
+18	Chèvre	3.00	1
+19	Burrata	4.00	1
+20	Piments	1.50	1
+21	Tomates cerises	2.00	1
+22	Maïs	1.50	1
+23	Aubergines	2.00	1
+24	Courgettes	2.00	0
+25	Sauce piquante	1.00	0
