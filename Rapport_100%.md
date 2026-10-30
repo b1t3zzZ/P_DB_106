@@ -19,21 +19,21 @@
 ## Table des matières
 
 1. [Introduction et contexte](#1-introduction-et-contexte)
-2. [Modélisation MERISE (Section 3.1)](#2-modelisation-merise-section-31)
+2. [Modélisation MERISE (Section 3.1)](#2-modélisation-merise-section-31)
     - 2.1 Modèle Conceptuel de Données (MCD)
     - 2.2 Choix de modélisation
     - 2.3 Modèle Logique de Données (MLD)
-3. [Création de la base et des tables (Section 3.2)](#3-creation-de-la-base-et-des-tables-section-32)
+3. [Création de la base et des tables (Section 3.2)](#3-création-de-la-base-et-des-tables-section-32)
     - 3.1 Environnement technique
     - 3.2 Script DDL
     - 3.3 Renforcement des contraintes et valeurs autorisées (Améliorations Jalon 50%)
     - 3.4 Contraintes CHECK de robustesse des données (Améliorations Jalon 80%)
-4. [Chargement des données (Section 3.3)](#4-chargement-des-donnees-section-33)
+4. [Chargement des données (Section 3.3)](#4-chargement-des-données-section-33)
 5. [Sauvegarde et restauration (Section 3.4)](#5-sauvegarde-et-restauration-section-34)
-6. [Requêtes SQL (Section 3.5)](#6-requ%C3%AAtes-sql-section-35)
+6. [Requêtes SQL (Section 3.5)](#6-requêtes-sql-section-35)
 7. [Analyse et optimisation des index (Section 3.6)](#7-analyse-et-optimisation-des-index-section-36)
-8. [Gestion des utilisateurs et des rôles (Section 3.7)](#8-gestion-des-utilisateurs-et-des-roles-section-37)
-9. [Transactions et intégrité des données (Section 3.8)](#9-transactions-et-integrite-des-donnees-section-38)
+8. [Gestion des utilisateurs et des rôles (Section 3.7)](#8-gestion-des-utilisateurs-et-des-rôles-section-37)
+9. [Transactions et intégrité des données (Section 3.8)](#9-transactions-et-intégrité-des-données-section-38)
 10. [Utilisation de l’intelligence artificielle (Section 3.9)](#10-utilisation-de-lintelligence-artificielle-section-39)
 11. [Validation et signatures](#11-validation-et-signatures)
 
@@ -63,23 +63,15 @@ La modélisation a été conduite avec le logiciel **Looping**. Deux itérations
 
 La première modélisation comportait quelques imprécisions, notamment au niveau des cardinalités de livraison et de la définition des attributs de certaines entités :
 
-MCD Version Initiale
-
 [![MCD Version Initiale](images/mcd_ancienne_version.png)](images/mcd_ancienne_version.png)
 🔍 *[Ouvrir l'image en taille réelle : mcd_ancienne_version.png](images/mcd_ancienne_version.png)*
-
-MCD Version Initiale
 
 #### Version finale et validée du MCD
 
 Après ajustement des contraintes métier du cahier des charges, le schéma final a été consolidé :
 
-MCD Version Finale
-
 [![MCD Version Finale](images/mcd_version_finale.png)](images/mcd_version_finale.png)
 🔍 *[Ouvrir l'image en taille réelle : mcd_version_finale.png](images/mcd_version_finale.png)*
-
-MCD Version Finale
 
 ---
 
@@ -92,53 +84,27 @@ Un topping n’est pas un article indépendant du catalogue mais un supplément 
 2. **Cardinalité de la relation Livraison — Commande :**
 Une commande de type livraison donne lieu à **au maximum une seule livraison**. Dans le MCD, la commande est reliée à la livraison avec une cardinalité $(0,1)$ ou $(0,n)$ (au sens où la livraison référence une et une seule commande : $1,1$). Cela garantit qu’une commande sur place ou à emporter n’a aucune livraison ($0$), tandis qu’une commande à livrer en possède une unique.
 3. **Multiplicité des adresses et indépendance des comptes clients :**
-L’entité `CLIENT` est reliée à `ADDRESS` par $(1,n)$ côté client et $(0,1)$ côté adresse. Un client possède au moins une adresse enregistrée, mais peut en posséder plusieurs (domicile, bureau, etc.). De plus, la relation entre `CLIENT` et `COMMANDE` est de type $(0,n)$, permettant d’enregistrer un client dans le système avant même qu’il n’ait validé son premier achat.
+L’entité `CLIENT` est reliée à `ADRESSE` par $(0,n)$ côté client et $(1,1)$ côté adresse (chaque adresse enregistrée appartient obligatoirement à un et un seul client). Un client peut enregistrer plusieurs adresses (domicile, bureau, etc.). De plus, la relation entre `CLIENT` et `COMMANDE` est de type $(0,n)$, permettant d’enregistrer un client dans le système avant même qu’il n’ait validé son premier achat.
 
 ---
 
 ### 2.3 Modèle Logique de Données (MLD)
 
-La traduction du MCD selon les règles formelles de normalisation relationnelle produit le MLD suivant (clés primaires soulignées, clés étrangères précédées d’un dièse `#`) :
+La traduction du MCD selon les règles formelles de normalisation relationnelle produit le MLD suivant (clés primaires soulignées `<u>...</u>`, clés étrangères précédées d’un dièse `#`) :
 
-- **t_client** (, nom, prenom, email, telephone)
-    
-    client_id
-    
-- **t_adresse** (, rue, npa, localite, #client_fk)
-    
-    adresse_id
-    
-- **t_article** (, nom, type, prix, tva, actif)
-    
-    article_id
-    
-- **t_topping** (, nom, prix, actif)
-    
-    topping_id
-    
-- **t_commande** (, date_creation, type, statut, #client_fk, #adresse_livraison_fk)
-    
-    commande_id
-    
-- **t_ligne_commande** (, quantite, prix_unitaire, #commande_fk, #article_fk)
-    
-    ligne_commande_id
-    
-- **t_ligne_topping** (, prix_facture)
-    
-    #ligne_commande_fk, #topping_fk
-    
-- **t_paiement** (, date_paiement, montant, mode, #commande_fk)
-    
-    paiement_id
-    
-- **t_livreur** (, nom, prenom, telephone, actif)
-    
-    livreur_id
-    
-- **t_livraison** (, heure_depart, heure_arrivee, #commande_fk, #livreur_fk)
-    
-    livraison_id
+- **t_client** (<u>client_id</u>, nom, prenom, email, telephone)
+- **t_adresse** (<u>adresse_id</u>, rue, npa, localite, #client_fk)  
+  *(Contrainte d'unicité composite : `UNIQUE (client_fk, adresse_id)`)*
+- **t_article** (<u>article_id</u>, nom, type, prix, tva, actif)
+- **t_topping** (<u>topping_id</u>, nom, prix, actif)
+- **t_commande** (<u>commande_id</u>, date_creation, type, statut, #client_fk, #adresse_livraison_fk)  
+  *(Clé étrangère composite : `(#client_fk, #adresse_livraison_fk)` référence `t_adresse(client_fk, adresse_id)`)*
+- **t_ligne_commande** (<u>ligne_commande_id</u>, quantite, prix_unitaire, #commande_fk, #article_fk)
+- **t_ligne_topping** (<u>#ligne_commande_fk</u>, <u>#topping_fk</u>, prix_facture)
+- **t_paiement** (<u>paiement_id</u>, date_paiement, montant, mode, #commande_fk)
+- **t_livreur** (<u>livreur_id</u>, nom, prenom, telephone, actif)
+- **t_livraison** (<u>livraison_id</u>, heure_depart, heure_arrivee, #commande_fk, #livreur_fk)  
+  *(Contrainte d'unicité : `UNIQUE (#commande_fk)` garantissant une livraison au maximum par commande)*
     
 
 ---
@@ -432,6 +398,9 @@ Dans un environnement de production, la mise en œuvre d’une sauvegarde à fro
     mysqldump -uroot -proot db_thanospizza > db_sauvegarde_thanospizza.sql
     ```
     
+    [![Sauvegarde intégrale avec mysqldump](images/5.1%20Sauvegarde%20intégrale%20avec%20mysqldump.png)](images/5.1%20Sauvegarde%20intégrale%20avec%20mysqldump.png)
+    *Preuve d’exécution : Exportation complète du schéma et des données avec mysqldump.*
+    
 2. **Altération volontaire des données (tests d’insertion et modification) :**
     
     ```sql
@@ -448,7 +417,7 @@ Dans un environnement de production, la mise en œuvre d’une sauvegarde à fro
 3. **Restauration de la base à partir du fichier d’archive :**
     
     ```bash
-    mysql -uroot -proot db_thanospizza < db_sauvegarde_thanospizza.sql
+    mysql -uroot -proot db_thanospizza < /scripts/db_sauvegarde_thanospizza.sql
     ```
     
 4. **Vérification du résultat et démonstration complète (Améliorations Jalon 80%) :**
@@ -905,13 +874,19 @@ GRANT SELECT ON db_thanospizza.t_commande TO 'r_livreur';
 GRANT SELECT ON db_thanospizza.t_adresse TO 'r_livreur';
 GRANT UPDATE (heure_depart, heure_arrivee) ON db_thanospizza.t_livraison TO 'r_livreur';
 GRANT UPDATE (statut) ON db_thanospizza.t_commande TO 'r_livreur';
+```
+[![Droits livreur](images/droits_livreur.png)](images/droits_livreur.png)
 
+```sql
 GRANT SELECT ON db_thanospizza.t_commande TO 'r_caisse';
 GRANT SELECT ON db_thanospizza.t_ligne_commande TO 'r_caisse';
 GRANT SELECT ON db_thanospizza.t_ligne_topping TO 'r_caisse';
 GRANT SELECT ON db_thanospizza.t_article TO 'r_caisse';
 GRANT SELECT, INSERT ON db_thanospizza.t_paiement TO 'r_caisse';
+```
+[![Droits caisse](images/droits_caisse.png)](images/droits_caisse.png)
 
+```sql
 GRANT SELECT ON db_thanospizza.* TO 'r_analyste';
 ```
 [![Droits analyste](images/droits_analyste.png)](images/droits_analyste.png)
@@ -925,6 +900,10 @@ CREATE USER 'u_pizza'@'%' IDENTIFIED BY 'Pizza2026!';
 CREATE USER 'u_livreur'@'%' IDENTIFIED BY 'Livreur2026!';
 CREATE USER 'u_caisse'@'%' IDENTIFIED BY 'Caisse2026!';
 CREATE USER 'u_analyste'@'%' IDENTIFIED BY 'Analyste2026!';
+```
+[![Création des utilisateurs](images/creation_utilisateurs.png)](images/creation_utilisateurs.png)
+
+```sql
 
 -- 4. Attribution et activation des rôles
 GRANT 'r_admin' TO 'u_admin'@'%';
@@ -1127,7 +1106,7 @@ Rapport lu et approuvé.
 **L'apprenti :**  
 Nom et prénom : Maksym Tsybulevskyi  
 Signature : ___________________________  
-Date : ___ / ___ / 2026  
+Date : 30 / 10 / 2026  
 
 **Le chef de projet / Enseignant :**  
 Nom et prénom : ___________________________  

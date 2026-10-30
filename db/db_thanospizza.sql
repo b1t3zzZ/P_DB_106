@@ -90,7 +90,7 @@ CREATE TABLE t_ligne_commande (
    ligne_commande_id INT AUTO_INCREMENT,
    commande_fk INT NOT NULL,
    article_fk INT NOT NULL,
-   quantite INT CHECK (quantite >= 0) NOT NULL,
+   quantite INT CHECK (quantite > 0) NOT NULL,
    prix_unitaire DECIMAL(10,2) CHECK(prix_unitaire >= 0) NOT NULL,
    PRIMARY KEY (ligne_commande_id),
    CONSTRAINT fk_ligne_commande FOREIGN KEY (commande_fk) REFERENCES t_commande (commande_id),
