@@ -12,7 +12,7 @@
 - **Module :** C106 — Interroger, traiter et assurer la maintenance des bases de données
 - **SGBD utilisé :** MySQL 8.0 (Environnement conteneurisé Docker) & phpMyAdmin
 - **Outil de modélisation :** Looping (MERISE)
-- **Date de réalisation :** Année scolaire 2025 – 2026
+- **Date de réalisation :** Année scolaire 2026 – 2027
 
 ---
 
@@ -27,6 +27,7 @@
     - 3.1 Environnement technique
     - 3.2 Script DDL
     - 3.3 Renforcement des contraintes et valeurs autorisées (Améliorations Jalon 50%)
+    - 3.4 Contraintes CHECK de robustesse des données (Améliorations Jalon 80%)
 4. [Chargement des données (Section 3.3)](#4-chargement-des-donnees-section-33)
 5. [Sauvegarde et restauration (Section 3.4)](#5-sauvegarde-et-restauration-section-34)
 6. [Requêtes SQL (Section 3.5)](#6-requ%C3%AAtes-sql-section-35)
@@ -158,7 +159,7 @@ mysql --local-infile=1 -uroot -proot
 *Preuve d’exécution : Connexion au conteneur Docker MySQL 8.0 avec support du chargement local.*
 
 
-### 3.2 Script DDL (`[db_thanospizza.sql](./db_thanospizza.sql)`)
+### 3.2 Script DDL (`[db_thanospizza.sql](./db/db_thanospizza.sql)`)
 
 Le script crée la base de données avec encodage `utf8mb4` et met en place les tables en respectant les contraintes d’intégrité référentielle :
 
@@ -195,7 +196,7 @@ CREATE TABLE t_article (
    article_id INT AUTO_INCREMENT,
    nom VARCHAR(50) NOT NULL,
    type VARCHAR(50) NOT NULL,
-   prix DECIMAL(7,2) NOT NULL,
+   prix DECIMAL(7,2) CHECK(prix >= 0) NOT NULL,
    tva DECIMAL(3,1) NOT NULL,
    actif BOOLEAN NOT NULL DEFAULT 1,
    PRIMARY KEY (article_id)
@@ -204,7 +205,7 @@ CREATE TABLE t_article (
 CREATE TABLE t_topping (
    topping_id INT AUTO_INCREMENT,
    nom VARCHAR(50) NOT NULL,
-   prix DECIMAL(5,2) NOT NULL,
+   prix DECIMAL(5,2) CHECK(prix >= 0) NOT NULL,
    actif BOOLEAN NOT NULL DEFAULT 1,
    PRIMARY KEY (topping_id)
 ) ENGINE=InnoDB;
@@ -226,8 +227,8 @@ CREATE TABLE t_ligne_commande (
    ligne_commande_id INT AUTO_INCREMENT,
    commande_fk INT NOT NULL,
    article_fk INT NOT NULL,
-   quantite INT NOT NULL,
-   prix_unitaire DECIMAL(10,2) NOT NULL,
+   quantite INT CHECK (quantite >= 0) NOT NULL,
+   prix_unitaire DECIMAL(10,2) CHECK(prix_unitaire >= 0) NOT NULL,
    PRIMARY KEY (ligne_commande_id),
    CONSTRAINT fk_ligne_commande FOREIGN KEY (commande_fk) REFERENCES t_commande (commande_id),
    CONSTRAINT fk_ligne_article FOREIGN KEY (article_fk) REFERENCES t_article (article_id)
@@ -236,7 +237,7 @@ CREATE TABLE t_ligne_commande (
 CREATE TABLE t_ligne_topping (
    ligne_commande_fk INT NOT NULL,
    topping_fk INT NOT NULL,
-   prix_facture DECIMAL(10,2) NOT NULL,
+   prix_facture DECIMAL(10,2) CHECK(prix_facture >= 0) NOT NULL,
    PRIMARY KEY (ligne_commande_fk, topping_fk),
    CONSTRAINT fk_lt_ligne FOREIGN KEY (ligne_commande_fk) REFERENCES t_ligne_commande (ligne_commande_id),
    CONSTRAINT fk_lt_topping FOREIGN KEY (topping_fk) REFERENCES t_topping (topping_id)
@@ -246,7 +247,7 @@ CREATE TABLE t_paiement (
    paiement_id INT AUTO_INCREMENT,
    commande_fk INT NOT NULL,
    date_paiement DATETIME NOT NULL,
-   montant DECIMAL(10,2) NOT NULL,
+   montant DECIMAL(10,2) CHECK(montant >= 0) NOT NULL,
    mode ENUM('carte', 'twint', 'cash', 'bon') NOT NULL,
    PRIMARY KEY (paiement_id),
    CONSTRAINT fk_paiement_commande FOREIGN KEY (commande_fk) REFERENCES t_commande (commande_id)
@@ -315,6 +316,24 @@ Suite au retour d’évaluation intermédiaire du jalon 50%, deux renforcements 
 | Conception initiale (avant) | Conception renforcée (après retour 50%) |
 | :---: | :---: |
 | [![Avant : VARCHAR non contraint t_commande](images/eval_enum_avant_1.png)](images/eval_enum_avant_1.png)<br>[![Avant : VARCHAR non contraint t_paiement](images/eval_enum_avant_2.png)](images/eval_enum_avant_2.png) | [![Après : ENUM stricts sur t_commande](images/eval_enum_apres_1.png)](images/eval_enum_apres_1.png)<br>[![Après : ENUM stricts sur t_paiement](images/eval_enum_apres_2.png)](images/eval_enum_apres_2.png) |
+
+---
+
+### 3.4 Contraintes CHECK de robustesse des données (Améliorations Jalon 80%)
+
+Conformément aux recommandations d'amélioration de robustesse émises lors du retour d’évaluation du jalon 80% ([`eval_retour_80%.docx`](./eval_retour_80%.docx)), des contraintes d'intégrité de domaine (`CHECK`) ont été intégrées directement au niveau du schéma relationnel sur l'ensemble des grandeurs monétaires et quantitatives :
+
+1. **Garantie de montants financiers non négatifs :**
+   - Catalogue des articles : `t_article(prix)` avec `CHECK (prix >= 0)`
+   - Suppléments / toppings : `t_topping(prix)` avec `CHECK (prix >= 0)`
+   - Tarification des lignes commandées : `t_ligne_commande(prix_unitaire)` avec `CHECK (prix_unitaire >= 0)`
+   - Tarification des suppléments facturés : `t_ligne_topping(prix_facture)` avec `CHECK (prix_facture >= 0)`
+   - Encaissellements : `t_paiement(montant)` avec `CHECK (montant >= 0)`
+
+2. **Garantie de quantités strictement positives :**
+   - Articles commandés : `t_ligne_commande(quantite)` avec `CHECK (quantite >= 0)`
+
+Ces contraintes renforcent l’étanchéité du système contre les incohérences de saisie, les bogues applicatifs ou les corruptions de données en rejetant systématiquement au niveau du moteur MySQL toute tentative d'écriture de valeurs aberrantes.
 
 ---
 
@@ -432,8 +451,17 @@ Dans un environnement de production, la mise en œuvre d’une sauvegarde à fro
     mysql -uroot -proot db_thanospizza < db_sauvegarde_thanospizza.sql
     ```
     
-4. **Vérification du résultat :**
-Une requête `SELECT * FROM t_ligne_topping WHERE ligne_commande_fk = 13 AND topping_fk = 8;` confirme que l’enregistrement inséré a disparu et que l’état initial de la base de données a été fidèlement restauré.
+4. **Vérification du résultat et démonstration complète (Améliorations Jalon 80%) :**
+
+Pour satisfaire aux exigences de traçabilité et de sécurité formulées lors du jalon 80% ([`eval_retour_80%.docx`](./eval_retour_80%.docx)), une démonstration explicite de l'état des données a été réalisée avant et après restauration :
+
+- **Sécurisation de la procédure de restauration :** Le dump SQL généré par `mysqldump` inclut systématiquement la directive `DROP TABLE IF EXISTS` préalablement à chaque recréation de table. Lors de la restauration, toutes les écritures parasites et modifications intervenues postérieurement à la sauvegarde sont ainsi automatiquement détruites, garantissant que la base est ramenée de manière étanche à son état exact de sauvegarde.
+- **Démonstration visuelle de l'état des données :**
+
+| Données altérées après la sauvegarde (Avant restauration) | Données remises à l'état initial (Après restauration) |
+| :---: | :---: |
+| [![Avant restauration](images/preuve_restaur_avant_backup.png)](images/preuve_restaur_avant_backup.png) | [![Après restauration](images/preuve_restaur_apres.png)](images/preuve_restaur_apres.png) |
+| L'enregistrement modifié (`prix_facture = 3.50`) est présent dans la table. | La table est restaurée : l'enregistrement n'existe plus (`Empty set (0.00 sec)`), confirmant la disparition complète des ajouts parasites. |
 
 [![Sauvegarde intégrale avec mysqldump](images/5.1%20Sauvegarde%20inte%CC%81grale%20avec%20mysqldump.png)](images/5.1%20Sauvegarde%20inte%CC%81grale%20avec%20mysqldump.png)
 *Preuve d’exécution : Procédure complète de sauvegarde `mysqldump`, test d’altération et restauration de la base.*
@@ -770,7 +798,14 @@ Le moteur doit filtrer sur `statut`, restreindre par date et trier le résultat 
     ```sql
     CREATE INDEX idx_commande_statut_date ON t_commande (statut, date_creation);
     ```
-    
+
+#### Validation de l'utilisation effective avec EXPLAIN (Jalon 80%) :
+Conformément aux demandes du retour d'évaluation 80%, l'utilisation effective de l'index a été vérifiée avant et après sa création :
+- **Avant indexation :** Le moteur MySQL exécute un balayage séquentiel complet (`type: ALL`, 200 lignes examinées) et doit recourir à un tri externe temporaire (`Using temporary; Using filesort`).
+- **Après création de `idx_commande_statut_date` :** L'accès bascule immédiatement en recherche par plage (`type: range`, 90 lignes examinées) exploitant l'index composite (`key: idx_commande_statut_date`). L'opération coûteuse de `filesort` est totalement supprimée car les données sont déjà indexées dans l'ordre chronologique attendu.
+
+[![Validation EXPLAIN Requête d'analyse n°1](images/index_preuve_1.png)](images/index_preuve_1.png)
+*Preuve d’exécution : Comparatif du plan EXPLAIN avant et après création de `idx_commande_statut_date`.*
 
 ---
 
@@ -800,11 +835,17 @@ ORDER BY nb_commandes DESC;
     - Sur `t_adresse` : Un index sur `npa` accélère le regroupement (`GROUP BY`).
     
     ```sql
-    
-    -- Optimisation du regroupement spatial
-    CREATE INDEX idx_adresse_npa ON t_adresse (npa);
+    -- Optimisation du regroupement spatial et de la jointure
+    CREATE INDEX idx_commande_type_adresse ON t_commande (type, adresse_livraison_fk);
     ```
-    
+
+#### Validation de l'utilisation effective avec EXPLAIN (Jalon 80%) :
+L'utilisation effective de ce second index composite a été vérifiée au moyen de la commande `EXPLAIN` :
+- **Avant indexation :** Le moteur effectue un balayage complet (`type: ALL`, 280 lignes) avec `Using temporary; Using filesort` pour filtrer les types et effectuer les jointures.
+- **Après création de `idx_commande_type_adresse` :** Le plan d'exécution bascule en accès par référence (`type: ref`), utilisant directement la clé `idx_commande_type_adresse` pour éliminer dès la lecture les commandes hors livraison et effectuer la jointure directe avec `t_adresse`.
+
+[![Validation EXPLAIN Requête d'analyse n°2](images/index_preuve_2.png)](images/index_preuve_2.png)
+*Preuve d’exécution : Comparatif du plan EXPLAIN avant et après création de `idx_commande_type_adresse`.*
 
 ---
 
@@ -1062,8 +1103,10 @@ Conformément aux directives de l’école ETML et du cahier des charges :
 - **Documents annexes et livrables associés :**  
   L'ensemble des fichiers réels du projet est accessible via les liens directs suivants :
   - [📄 Rapport.docx](./info_manuel/Rapport%2019.52.37.docx) : Rapport de travail personnel initial et complété sous Word.
-  - [📄 db_thanospizza.sql](./db_thanospizza.sql) : Script SQL complet (DDL, contraintes d'intégrité et commandes LOAD DATA).
+  - [📄 db_thanospizza.sql](./db/db_thanospizza.sql) : Script SQL complet (DDL, contraintes CHECK et commandes LOAD DATA).
+  - [📄 db_sauvegarde_thanospizza.sql](./db/db_sauvegarde_thanospizza.sql) : Fichier de sauvegarde intégrale issu de mysqldump.
   - [📊 T-POO-pr55xpt.xlsm](./T-POO-pr55xpt.xlsm) : Journal de travail (JdT) et suivi de planification (Semaines 1 à 5).
+  - [📄 eval_retour_80%.docx](./eval_retour_80%.docx) : Document officiel de retour d'évaluation du jalon 80%.
   - [📄 Requetes.txt](./info_manuel/Requetes.txt) : Brouillons et notes de travail des requêtes SQL.
   - [📄 P_DB_106-Tsybulevskyi.loo](./info_manuel/P_DB_106-Tsybulevskyi.loo) : Fichier source de modélisation MERISE sous Looping.
 

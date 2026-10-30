@@ -47,7 +47,7 @@ CREATE TABLE t_article (
    article_id INT AUTO_INCREMENT,
    nom VARCHAR(50) NOT NULL,
    type VARCHAR(50) NOT NULL,
-   prix DECIMAL(7,2) NOT NULL,
+   prix DECIMAL(7,2) CHECK(prix >= 0) NOT NULL,
    tva DECIMAL(3,1) NOT NULL,
    actif BOOLEAN NOT NULL DEFAULT 1,
    PRIMARY KEY (article_id)
@@ -60,7 +60,7 @@ CREATE TABLE t_article (
 CREATE TABLE t_topping (
    topping_id INT AUTO_INCREMENT,
    nom VARCHAR(50) NOT NULL,
-   prix DECIMAL(5,2) NOT NULL,
+   prix DECIMAL(5,2) CHECK(prix >= 0) NOT NULL,
    actif BOOLEAN NOT NULL DEFAULT 1,
    PRIMARY KEY (topping_id)
 ) ENGINE=InnoDB;
@@ -90,8 +90,8 @@ CREATE TABLE t_ligne_commande (
    ligne_commande_id INT AUTO_INCREMENT,
    commande_fk INT NOT NULL,
    article_fk INT NOT NULL,
-   quantite INT NOT NULL,
-   prix_unitaire DECIMAL(10,2) NOT NULL,
+   quantite INT CHECK (quantite >= 0) NOT NULL,
+   prix_unitaire DECIMAL(10,2) CHECK(prix_unitaire >= 0) NOT NULL,
    PRIMARY KEY (ligne_commande_id),
    CONSTRAINT fk_ligne_commande FOREIGN KEY (commande_fk) REFERENCES t_commande (commande_id),
    CONSTRAINT fk_ligne_article FOREIGN KEY (article_fk) REFERENCES t_article (article_id)
@@ -104,7 +104,7 @@ CREATE TABLE t_ligne_commande (
 CREATE TABLE t_ligne_topping (
    ligne_commande_fk INT NOT NULL,
    topping_fk INT NOT NULL,
-   prix_facture DECIMAL(10,2) NOT NULL,
+   prix_facture DECIMAL(10,2) CHECK(prix_facture >= 0) NOT NULL,
    PRIMARY KEY (ligne_commande_fk, topping_fk),
    CONSTRAINT fk_lt_ligne FOREIGN KEY (ligne_commande_fk) REFERENCES t_ligne_commande (ligne_commande_id),
    CONSTRAINT fk_lt_topping FOREIGN KEY (topping_fk) REFERENCES t_topping (topping_id)
@@ -118,7 +118,7 @@ CREATE TABLE t_paiement (
    paiement_id INT AUTO_INCREMENT,
    commande_fk INT NOT NULL,
    date_paiement DATETIME NOT NULL,
-   montant DECIMAL(10,2) NOT NULL,
+   montant DECIMAL(10,2) CHECK(montant >= 0) NOT NULL,
    mode ENUM('carte', 'twint', 'cash', 'bon') NOT NULL,
    PRIMARY KEY (paiement_id),
    CONSTRAINT fk_paiement_commande FOREIGN KEY (commande_fk) REFERENCES t_commande (commande_id)
