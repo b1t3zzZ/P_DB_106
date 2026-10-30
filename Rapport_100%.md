@@ -1082,7 +1082,6 @@ Conformément aux directives de l’école ETML et du cahier des charges :
   - [📄 db_thanospizza.sql](./db/db_thanospizza.sql) : Script SQL complet (DDL, contraintes CHECK et commandes LOAD DATA).
   - [📄 db_sauvegarde_thanospizza.sql](./db/db_sauvegarde_thanospizza.sql) : Fichier de sauvegarde intégrale issu de mysqldump.
   - [📊 T-POO-pr55xpt.xlsm](./T-POO-pr55xpt.xlsm) : Journal de travail (JdT) et suivi de planification (Semaines 1 à 5).
-  - [📄 eval_retour_80%.docx](./eval_retour_80%.docx) : Document officiel de retour d'évaluation du jalon 80%.
   - [📄 Requetes.txt](./info_manuel/Requetes.txt) : Brouillons et notes de travail des requêtes SQL.
   - [📄 P_DB_106-Tsybulevskyi.loo](./info_manuel/P_DB_106-Tsybulevskyi.loo) : Fichier source de modélisation MERISE sous Looping.
 
